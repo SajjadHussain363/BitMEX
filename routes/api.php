@@ -55,7 +55,7 @@ $api->get('posts/{post}', 'App\Http\Controllers\PostController@show');
 $api->get('/comprehensive_reports/show', 'App\Http\Controllers\ComprehensiveReportController@index');
 $api->post('/comprehensive_reports/insert', 'App\Http\Controllers\ComprehensiveReportController@store');
 
-// Monthly Repost
+//Monthly Report
 $api->get('/monthly_details/show', 'App\Http\Controllers\MonthlyDetailsController@index');
 $api->post('/monthly_details/insert', 'App\Http\Controllers\MonthlyDetailsController@store');
 
