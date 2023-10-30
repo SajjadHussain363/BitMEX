@@ -45,9 +45,19 @@ Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 // show admin statisics 
 
-Route::get('show-statsistics/{cardID?}', [StatisticsController::class, 'getTotalStats']);
 
+//Posts
+$api->get('/posts/index', 'App\Http\Controllers\PostController@index');
+$api->post('/posts/store', 'App\Http\Controllers\PostController@store');
+$api->get('posts/{post}', 'App\Http\Controllers\PostController@show');
 
+//Comprehensive Report
+$api->get('/comprehensive_reports/show', 'App\Http\Controllers\ComprehensiveReportController@index');
+$api->post('/comprehensive_reports/insert', 'App\Http\Controllers\ComprehensiveReportController@store');
+
+// Monthly Repost
+$api->get('/monthly_details/show', 'App\Http\Controllers\MonthlyDetailsController@index');
+$api->post('/monthly_details/insert', 'App\Http\Controllers\MonthlyDetailsController@store');
 
 
 
