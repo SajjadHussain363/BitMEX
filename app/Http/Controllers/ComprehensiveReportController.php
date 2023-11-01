@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ComprehensiveReport;
 use Illuminate\Http\Request;
+use Validator;
 
 class ComprehensiveReportController extends Controller
 {
@@ -14,9 +15,21 @@ class ComprehensiveReportController extends Controller
      */
     public function index()
     {
-        return response()->json([
-            'comprehensive_reports' => ComprehensiveReport::get()
-        ]);
+        $comprehensive_reports = ComprehensiveReport::all(); 
+        if ($comprehensive_reports->count() > 0) {
+            return response()
+            ->json([
+                'status' => 200,
+                'comprehensive_reports' => $comprehensive_reports
+            ], 200);
+        }
+        else {
+            return response()
+            ->json([
+                'status' => 404,
+                'comprehensive_reports' =>'No Details Found!'
+            ], 404);
+        }
     }
 
     /**
@@ -27,19 +40,46 @@ class ComprehensiveReportController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new ComprehensiveReport;
-        $post->empName = $request->empName;
-        $post->phone = $request->phone;
-        $post->address = $request->address;
-        
-
-        $post->save();
-
-        return response()->json([
-            'message' => 'Post Created',
-            'status' => 'success',
-            'data'   => $post
+        $validator = Validator::make($request->all(), [
+            'empName' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return response()
+            ->json([
+                'status' => 422, 
+                'errors' => $validator->messages()
+            ], 422);
+        }
+        else
+        {
+            
+
+            $comprehensive_reports = ComprehensiveReport::create([
+                'empName' => $request->empName,
+                'phone' => $request->phone,
+                'address' => $request->address,
+            ]);
+
+            if ($comprehensive_reports) {
+                return response()
+                ->json([
+                    'status' => 200,
+                    'message' => 'Details Added Successfully!!'
+                ], 200);
+            }
+
+            else
+            {
+                return response()
+                ->json([
+                    'status' => 500,
+                    'message' => 'Something Went Wrong.'
+                ], 500);
+            }
+        }
     }
 
     /**

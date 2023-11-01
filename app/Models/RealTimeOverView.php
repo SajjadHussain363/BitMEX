@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ComprehensiveReport extends Model
+class RealTimeOverView extends Model
 {
     use HasFactory;
 
-    protected $table = "comprehensive_reports";
+    protected $table = "real_time_over_views";
 
     protected $fillable = [ 
-        'empName',
-        'phone',
-        'address'
+        'title',
+        'description'
     ];
-
-
 }

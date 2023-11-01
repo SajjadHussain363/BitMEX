@@ -3,6 +3,7 @@
 use App\Http\Controllers\ComprehensiveReportController;
 use App\Http\Controllers\MonthlyDetailsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,8 +52,8 @@ Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 //Product
 
-// Route::get('/products', ProductsController::class,  'index');
-// Route::post('/product/store', ProductsController::class,'store');
+Route::get('/product', ProductController::class,  'index');
+Route::post('/product/store', ProductController::class,'store');
 
 //Posts
 Route::get('/posts/index', PostController::class, 'index');
