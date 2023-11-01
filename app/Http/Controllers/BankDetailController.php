@@ -33,18 +33,17 @@ class BankDetailController extends Controller
 
         // Define the common validation rules for all fields
         $commonValidationRules = [
-            'Name' => 'required',
-            'BankCardNumber' => 'required',
-            'BankName' => 'required',
-            'AccountProvince' => 'required',
-            'AccountOpeningDate' => 'required',
-            'IdentityID' => 'required',
-            'InternationalRemittanceCode' => 'required',
-            'ContactNumber' => 'required',
-            'user_id' =>'required'
+            'Name' => 'required|string|max:255', 
+            'BankCardNumber' => 'required|string|size:16', 
+            'BankName' => 'required|string|max:255',  
+            'AccountProvince' => 'required|string|max:255',
+            'AccountOpeningDate' => 'required|date',  
+            'IdentityID' => 'required|string|max:18', 
+            'InternationalRemittanceCode' => 'required|string|max:255',
+            'ContactNumber' => 'required|string|max:20',  
+            'user_id' => 'required|integer',  
         ];
-    
-     
+        
         // Perform validation
         $validator = Validator::make($request->all(), $commonValidationRules);
     
@@ -97,13 +96,13 @@ class BankDetailController extends Controller
 
         // Define the common validation rules for all fields
         $commonValidationRules = [
-            'Name' => 'required',
-            'BankCardNumber' => 'required',
-            'BankName' => 'required',
-            'AccountProvince' => 'required',
-            'user_id' =>'required'
+            'Name' => 'required|string|max:255',  
+            'BankCardNumber' => 'required|string|size:16',
+            'BankName' => 'required|string|max:255',  
+            'AccountProvince' => 'required|string|max:255',  
+            'user_id' => 'required|integer',
         ];
-    
+        
      
         // Perform validation
         $validator = Validator::make($request->all(), $commonValidationRules);
