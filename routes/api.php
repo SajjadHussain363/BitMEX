@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ComprehensiveReportController;
+use App\Http\Controllers\MonthlyDetailsController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankDetailController;
@@ -45,9 +49,23 @@ Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 // show admin statisics 
 
-Route::get('show-statsistics/{cardID?}', [StatisticsController::class, 'getTotalStats']);
+//Product
 
+// Route::get('/products', ProductsController::class,  'index');
+// Route::post('/product/store', ProductsController::class,'store');
 
+//Posts
+Route::get('/posts/index', PostController::class, 'index');
+Route::post('/posts/store', PostController::class, 'store');
+Route::get('posts/{post}', PostController::class, 'show');
+
+//Comprehensive Report
+Route::get('/comprehensive_reports/show', ComprehensiveReportController::class, 'index');
+Route::post('/comprehensive_reports/insert', ComprehensiveReportController::class,  'store');
+
+//Monthly Report
+Route::get('/monthly_details/show', MonthlyDetailsController::class, 'index');
+Route::post('/monthly_details/insert', MonthlyDetailsController::class, 'store');
 
 
 
