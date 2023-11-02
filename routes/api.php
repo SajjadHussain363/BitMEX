@@ -4,13 +4,12 @@ use App\Http\Controllers\ComprehensiveReportController;
 use App\Http\Controllers\MonthlyDetailsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankDetailController;
 use App\Http\Controllers\CurrencyDataController;
 use App\Http\Controllers\StatisticsController;
-
+    
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -52,21 +51,21 @@ Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 //Product
 
-Route::get('/product', ProductController::class,  'index');
-Route::post('/product/store', ProductController::class,'store');
+Route::get('/product', [ProductController::class,  'index']);
+Route::post('/product/store', [ProductController::class,'store']);
 
 //Posts
-Route::get('/posts/index', PostController::class, 'index');
-Route::post('/posts/store', PostController::class, 'store');
-Route::get('posts/{post}', PostController::class, 'show');
+Route::get('/posts/index', [PostController::class, 'index']);
+Route::post('/posts/store', [PostController::class, 'store']);
+Route::get('posts/{post}', [PostController::class, 'show']);
 
 //Comprehensive Report
-Route::get('/comprehensive_reports/show', ComprehensiveReportController::class, 'index');
-Route::post('/comprehensive_reports/insert', ComprehensiveReportController::class,  'store');
+Route::get('/comprehensive_reports/show', [ComprehensiveReportController::class, 'index']);
+Route::post('/comprehensive_reports/insert', [ComprehensiveReportController::class,  'store']);
 
 //Monthly Report
-Route::get('/monthly_details/show', MonthlyDetailsController::class, 'index');
-Route::post('/monthly_details/insert', MonthlyDetailsController::class, 'store');
+Route::get('/monthly_details/show', [MonthlyDetailsController::class, 'index']);
+Route::post('/monthly_details/insert', [MonthlyDetailsController::class, 'store']);
 
 
 
