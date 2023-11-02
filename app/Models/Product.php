@@ -26,7 +26,6 @@ class Product extends Model
         'MinimumLimitAmountTwo',
         'MinimumLimitAmountThree',
         'MinimumLimitAmountFour',
-        'TotalLimitAmount',
         'ProfitAndLossRatioOne',
         'ProfitAndLossRatioTwo',
         'ProfitAndLossRatioThree',

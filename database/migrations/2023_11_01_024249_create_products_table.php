@@ -30,7 +30,6 @@ return new class extends Migration
             $table->integer('MinimumLimitAmountTwo');
             $table->integer('MinimumLimitAmountThree');
             $table->integer('MinimumLimitAmountFour');
-            $table->integer('TotalLimitAmount')->nullable();
             $table->decimal('ProfitAndLossRatioOne');
             $table->decimal('ProfitAndLossRatioTwo');
             $table->decimal('ProfitAndLossRatioThree');

@@ -15,13 +15,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $total = DB::table('products')
-        //            ->select(DB::raw('SUM(MinimumLimitAmountOne + MinimumLimitAmountOne + MinimumLimitAmountOne
-        //            + MinimumLimitAmountOne) as TotalLimitAmount'))
-        //            ->first()
-        //            ->TotalLimitAmount;
-
-        // return response()->json(['TotalLimitAmount' => $total]);
         
         $products = Product::all(); 
         if ($products->count() > 0) {
@@ -67,7 +60,6 @@ class ProductController extends Controller
             'MinimumLimitAmountTwo' => 'required|digits:5',
             'MinimumLimitAmountThree' => 'required|digits:5',
             'MinimumLimitAmountFour' => 'required|digits:5',
-            'TotalLimitAmount' => '',
             'ProfitAndLossRatioOne' => 'required|decimal:2',
             'ProfitAndLossRatioTwo' => 'required|decimal:2',
             'ProfitAndLossRatioThree' => 'required|decimal:2',
@@ -94,10 +86,6 @@ class ProductController extends Controller
         }
         else
         {
-            // $total = $request->input('MinimumLimitAmountOne') + $request
-            // ->input('MinimumLimitAmountTwo') + $request
-            // ->input('MinimumLimitAmountThree') + $request
-            // ->input('MinimumLimitAmountFour');
 
             $input = $request->all();
   
@@ -109,12 +97,6 @@ class ProductController extends Controller
             }
       
             Product::create($input);
-
-
-            $total = $request->input('MinimumLimitAmountOne') + 
-            $request->input('MinimumLimitAmountTwo') + 
-            $request->input('MinimumLimitAmountThree') +
-            $request->input('MinimumLimitAmountFour');
 
             
             $products = Product::create([
@@ -133,7 +115,6 @@ class ProductController extends Controller
                 'MinimumLimitAmountTwo' => $request->MinimumLimitAmountTwo,
                 'MinimumLimitAmountThree' => $request->MinimumLimitAmountThree,
                 'MinimumLimitAmountFour' => $request->MinimumLimitAmountFour,
-                'TotalLimitAmount' => $total,
                 'ProfitAndLossRatioOne' => $request->ProfitAndLossRatioOne,
                 'ProfitAndLossRatioTwo' => $request->ProfitAndLossRatioTwo,
                 'ProfitAndLossRatioThree' => $request->ProfitAndLossRatioThree,
