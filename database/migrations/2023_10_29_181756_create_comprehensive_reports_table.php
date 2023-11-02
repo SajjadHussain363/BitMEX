@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('comprehensive_reports', function (Blueprint $table) {
             $table->id();
-            $table->string('empName');
-            $table->string('phone');
-            $table->string('address');
+            $table->string('remark');
+            $table->decimal('deposits');
+            $table->decimal('dispensing');
+            $table->integer('numffpeople');
+            $table->integer('numapeople');
+            $table->decimal('profitloss');
             $table->timestamps();
         });
     }

@@ -42,11 +42,16 @@ class MonthlyDetailsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'employee_name' => 'required',
-            'employee_phone' => 'required',
-            'total_tasks' => 'required',
-            'done_tasks' => 'required',
-            'pending_tasks' => 'required',
+            'date' => 'required',
+            'newUsers' => 'required',
+            'deposits' => 'required|decimal:2',
+            'dispensing' => 'required|decimal:2',
+            'numffpeople' => 'required|digits:2',
+            'numapeople' => 'required|digits:2',
+            'orderquant' => 'required|digits:2',
+            'custprofitloss' => 'required|decimal:2',
+            'runningwater' => 'required|decimal:2',
+
         ]);
 
         if ($validator->fails()) {
@@ -61,11 +66,16 @@ class MonthlyDetailsController extends Controller
             
 
             $monthly_details = MonthlyDetails::create([
-                'employee_name' => $request->employee_name,
-                'employee_phone' => $request->employee_phone,
-                'total_tasks' => $request->total_tasks,
-                'done_tasks' => $request->done_tasks,
-                'pending_tasks' => $request->pending_tasks,
+                'date' => $request->date,
+                'newUsers' => $request->newUsers,
+                'deposits' => $request->deposits,
+                'dispensing' => $request->dispensing,
+                'numffpeople' => $request->numffpeople,
+                'numapeople' => $request->numapeople,
+                'orderquant' => $request->orderquant,
+                'custprofitloss' => $request->custprofitloss,
+                'runningwater' => $request->runningwater,
+
             ]);
 
             if ($monthly_details) {

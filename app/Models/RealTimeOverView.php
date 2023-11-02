@@ -12,7 +12,10 @@ class RealTimeOverView extends Model
     protected $table = "real_time_over_views";
 
     protected $fillable = [ 
-        'title',
-        'description'
+        'recharge',
+        'withdraw',
+        'image',
+        'newToday',
+        'onlineUsers'
     ];
 }

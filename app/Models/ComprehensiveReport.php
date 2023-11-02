@@ -12,9 +12,12 @@ class ComprehensiveReport extends Model
     protected $table = "comprehensive_reports";
 
     protected $fillable = [ 
-        'empName',
-        'phone',
-        'address'
+        'remark',
+        'deposits',
+        'dispensing',
+        'numffpeople',
+        'numapeople',
+        'profitloss'
     ];
 
 

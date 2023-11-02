@@ -15,11 +15,15 @@ return new class extends Migration
     {
         Schema::create('monthly_details', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_name');
-            $table->string('employee_phone');
-            $table->integer('total_tasks');
-            $table->integer('done_tasks');
-            $table->integer('pending_tasks');
+            $table->string('date');
+            $table->string('newUsers');
+            $table->decimal('deposits');
+            $table->decimal('dispensing');
+            $table->integer('numffpeople');
+            $table->integer('numapeople');
+            $table->integer('orderquant');
+            $table->decimal('custprofitloss');
+            $table->decimal('runningwater');
             $table->timestamps();
         });
     }
