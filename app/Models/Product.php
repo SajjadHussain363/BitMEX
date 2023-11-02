@@ -9,12 +9,12 @@ class Product extends Model
 {
     use HasFactory;
 
-    // protected $table = 'products';
+    protected $table = 'products';
     protected $fillable = [
         'name',
         'ProductCode',
         'HomePageRecommendation',
-        // 'image',
+        'image',
         'MinimumRiskControlFluctuation',
         'MaximumRiskControlFluctuation',
         'RandomFluctuationRange',
@@ -26,6 +26,7 @@ class Product extends Model
         'MinimumLimitAmountTwo',
         'MinimumLimitAmountThree',
         'MinimumLimitAmountFour',
+        'TotalLimitAmount',
         'ProfitAndLossRatioOne',
         'ProfitAndLossRatioTwo',
         'ProfitAndLossRatioThree',
@@ -33,7 +34,14 @@ class Product extends Model
         'LossRatioOne',
         'LossRatioTwo',
         'LossRatioThree',
-        'LossRatioFour'
+        'LossRatioFour',
+        'MarketOpeningTimeMonday' ,
+        'MarketOpeningTimeTuesday',
+        'MarketOpeningTimeWednesday',
+        'MarketOpeningTimeThursday',
+        'MarketOpeningTimeFriday',
+        'MarketOpeningTimeSaturday',
+        'MarketOpeningTimeSunday'
     ];
 
 }

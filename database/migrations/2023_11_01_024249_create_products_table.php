@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('ProductCode')->unique();
             $table->boolean('HomePageRecommendation');
-            // $table->string('image')->nullable();
+            $table->string('image');
             $table->decimal('MinimumRiskControlFluctuation');
             $table->decimal('MaximumRiskControlFluctuation');
             $table->decimal('RandomFluctuationRange');
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('MinimumLimitAmountTwo');
             $table->integer('MinimumLimitAmountThree');
             $table->integer('MinimumLimitAmountFour');
+            $table->integer('TotalLimitAmount')->nullable();
             $table->decimal('ProfitAndLossRatioOne');
             $table->decimal('ProfitAndLossRatioTwo');
             $table->decimal('ProfitAndLossRatioThree');
@@ -38,13 +39,13 @@ return new class extends Migration
             $table->decimal('LossRatioTwo');
             $table->decimal('LossRatioThree');
             $table->decimal('LossRatioFour');
-            // $table->time('MarketOpeningTimeMonday');
-            // $table->time('MarketOpeningTimeTuesday');
-            // $table->time('MarketOpeningTimeWednesday');
-            // $table->time('MarketOpeningTimeThursday');
-            // $table->time('MarketOpeningTimeFriday');
-            // $table->time('MarketOpeningTimeSaturday');
-            // $table->time('MarketOpeningTimeSunday');
+            $table->string('MarketOpeningTimeMonday')->nullable();
+            $table->string('MarketOpeningTimeTuesday')->nullable();
+            $table->string('MarketOpeningTimeWednesday')->nullable();
+            $table->string('MarketOpeningTimeThursday')->nullable();
+            $table->string('MarketOpeningTimeFriday')->nullable();
+            $table->string('MarketOpeningTimeSaturday')->nullable();
+            $table->string('MarketOpeningTimeSunday')->nullable();
             $table->timestamps();
         });
     }
