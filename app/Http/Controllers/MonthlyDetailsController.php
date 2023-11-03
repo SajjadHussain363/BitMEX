@@ -43,14 +43,14 @@ class MonthlyDetailsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'date' => 'required',
-            'newUsers' => 'required',
-            'deposits' => 'required|decimal:2',
-            'dispensing' => 'required|decimal:2',
+            'newUsers' => 'required|string',
+            'deposits' => 'required|integer',
+            'dispensing' => 'required|digits:2',
             'numffpeople' => 'required|digits:2',
             'numapeople' => 'required|digits:2',
             'orderquant' => 'required|digits:2',
-            'custprofitloss' => 'required|decimal:2',
-            'runningwater' => 'required|decimal:2',
+            'custprofitloss' => 'required',
+            'runningwater' => 'required',
 
         ]);
 

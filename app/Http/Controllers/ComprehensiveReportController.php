@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\ComprehensiveReport;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Rules\DecimalRule;
+
 
 class ComprehensiveReportController extends Controller
 {
@@ -41,12 +44,12 @@ class ComprehensiveReportController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'remark' => 'required|string:100',
-            'deposits' => 'required|decimal:3',
-            'dispensing' => 'required|decimal:2',
-            'numffpeople' => 'required',
-            'numapeople' => 'required',
-            'profitloss' => 'required|decimal:2',
+            'remark' => 'required|string',
+            'deposits' => 'required|integer',
+            'dispensing' => 'required|integer',
+            'numffpeople' => 'required|integer',
+            'numapeople' => 'required|integer',
+            'profitloss' => 'required|integer',
 
         ]);
 

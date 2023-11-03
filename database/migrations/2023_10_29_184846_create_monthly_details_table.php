@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('date');
             $table->string('newUsers');
-            $table->decimal('deposits');
-            $table->decimal('dispensing');
+            $table->integer('deposits');
+            $table->integer('dispensing');
             $table->integer('numffpeople');
             $table->integer('numapeople');
             $table->integer('orderquant');
-            $table->decimal('custprofitloss');
-            $table->decimal('runningwater');
+            $table->integer('custprofitloss');
+            $table->integer('runningwater');
             $table->timestamps();
         });
     }

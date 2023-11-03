@@ -41,11 +41,11 @@ class RealTimeOverViewController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'recharge' => 'required|decimal:2',
-            'withdraw' => 'required|decimal:2',
+            'recharge' => 'required',
+            'withdraw' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'newToday' => 'required|digits:5',
-            'onlineUsers' => 'required|digits:5',
+            'newToday' => 'required|integer',
+            'onlineUsers' => 'required|integer',
             
         ]);
 
@@ -62,15 +62,15 @@ class RealTimeOverViewController extends Controller
         
         else
         {
+        
             $input = $request->all();
-  
         if ($image = $request->file('image')) {
             $destinationPath = 'imagesRealtime/';
             $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $postImage);
-            $input['image'] = "$postImage";
+            $input['image'] = $postImage;
         }
-  
+        
         RealTimeOverView::create($input);
             
 
@@ -124,12 +124,7 @@ class RealTimeOverViewController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RealTimeOverView  $realTimeOverView
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy(RealTimeOverView $realTimeOverView)
     {
         //

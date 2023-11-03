@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ComprehensiveReportController;
 use App\Http\Controllers\MonthlyDetailsController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RealTimeOverViewController;
@@ -49,6 +50,11 @@ Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 
 // show admin statisics 
+
+//Orders
+Route::get('/orders/index', [OrdersController::class,  'index']);
+Route::post('/orders/store', [OrdersController::class, 'store']);
+Route::get('/orders/{orders}', [OrdersController::class, 'show']);
 
 //Product
 Route::get('/product/index', [ProductController::class,  'index']);
