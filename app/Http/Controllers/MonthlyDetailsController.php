@@ -42,15 +42,15 @@ class MonthlyDetailsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'date' => 'required',
+            'date' => 'required|date',
             'newUsers' => 'required|string',
             'deposits' => 'required|integer',
-            'dispensing' => 'required|digits:2',
-            'numffpeople' => 'required|digits:2',
-            'numapeople' => 'required|digits:2',
-            'orderquant' => 'required|digits:2',
-            'custprofitloss' => 'required',
-            'runningwater' => 'required',
+            'dispensing' => 'required|integer',
+            'numffpeople' => 'required|integer',
+            'numapeople' => 'required|integer',
+            'orderquant' => 'required|integer',
+            'custprofitloss' => 'required|integer',
+            'runningwater' => 'required|integer',
 
         ]);
 

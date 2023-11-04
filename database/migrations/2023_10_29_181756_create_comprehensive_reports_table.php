@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('comprehensive_reports', function (Blueprint $table) {
             $table->id();
             $table->string('remark');
-            $table->integer('deposits');
-            $table->integer('dispensing');
+            $table->decimal('deposits', 10, 2);
+            $table->decimal('dispensing', 10, 2);
             $table->integer('numffpeople');
             $table->integer('numapeople');
-            $table->integer('profitloss');
+            $table->decimal('profitloss', 10, 2);
             $table->timestamps();
         });
     }

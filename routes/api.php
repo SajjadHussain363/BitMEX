@@ -3,7 +3,6 @@
 use App\Http\Controllers\ComprehensiveReportController;
 use App\Http\Controllers\MonthlyDetailsController;
 use App\Http\Controllers\OrdersController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RealTimeOverViewController;
 use Illuminate\Http\Request;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankDetailController;
 use App\Http\Controllers\CurrencyDataController;
 use App\Http\Controllers\StatisticsController;
-
+    
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,10 +45,9 @@ Route::get('curreny-set/{id}', [CurrencyDataController::class, 'show']);
 Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 
-
-
-
 // show admin statisics 
+Route::get('show-statsistics/{cardID?}', [StatisticsController::class, 'getTotalStats']);
+
 
 //Orders
 Route::get('/orders/index', [OrdersController::class,  'index']);

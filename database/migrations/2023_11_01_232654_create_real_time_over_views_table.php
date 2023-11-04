@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('real_time_over_views', function (Blueprint $table) {
             $table->id();
-            $table->integer('recharge');
-            $table->integer('withdraw');
-            $table->string('image');
+            $table->decimal('recharge', 10, 2);
+            $table->decimal('withdraw', 10, 2);
             $table->integer('newToday');
             $table->integer('onlineUsers');
             $table->timestamps();
