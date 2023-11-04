@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\ComprehensiveReport;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Rules\DecimalRule;
+
 
 class ComprehensiveReportController extends Controller
 {
@@ -27,7 +30,7 @@ class ComprehensiveReportController extends Controller
             return response()
             ->json([
                 'status' => 404,
-                'comprehensive_reports' =>'No Details Found!'
+                'comprehensive_reports' =>'No Reports Found!'
             ], 404);
         }
     }
@@ -41,9 +44,13 @@ class ComprehensiveReportController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'empName' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'remark' => 'required|string',
+            'deposits' => 'required|integer',
+            'dispensing' => 'required|integer',
+            'numffpeople' => 'required|integer',
+            'numapeople' => 'required|integer',
+            'profitloss' => 'required|integer',
+
         ]);
 
         if ($validator->fails()) {
@@ -58,16 +65,19 @@ class ComprehensiveReportController extends Controller
             
 
             $comprehensive_reports = ComprehensiveReport::create([
-                'empName' => $request->empName,
-                'phone' => $request->phone,
-                'address' => $request->address,
+                'remark' => $request->remark,
+                'deposits' => $request->deposits,
+                'dispensing' => $request->dispensing,
+                'numffpeople' => $request->numffpeople,
+                'numapeople' => $request->numapeople,
+                'profitloss' => $request->profitloss,
             ]);
 
             if ($comprehensive_reports) {
                 return response()
                 ->json([
                     'status' => 200,
-                    'message' => 'Details Added Successfully!!'
+                    'message' => 'Report Generated Successfully!!'
                 ], 200);
             }
 

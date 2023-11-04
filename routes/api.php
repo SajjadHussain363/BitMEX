@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ComprehensiveReportController;
 use App\Http\Controllers\MonthlyDetailsController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RealTimeOverViewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankDetailController;
@@ -49,23 +51,26 @@ Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 // show admin statisics 
 
+//Orders
+Route::get('/orders/index', [OrdersController::class,  'index']);
+Route::post('/orders/store', [OrdersController::class, 'store']);
+Route::get('/orders/{orders}', [OrdersController::class, 'show']);
+
 //Product
+Route::get('/product/index', [ProductController::class,  'index']);
+Route::post('/product/store', [ProductController::class, 'store']);
 
-Route::get('/product', [ProductController::class,  'index']);
-Route::post('/product/store', [ProductController::class,'store']);
-
-//Posts
-Route::get('/posts/index', [PostController::class, 'index']);
-Route::post('/posts/store', [PostController::class, 'store']);
-Route::get('posts/{post}', [PostController::class, 'show']);
+//Realtime Overview
+Route::get('/realtime/index', [RealTimeOverViewController::class, 'index']);
+Route::post('/realtime/store', [RealTimeOverViewController::class, 'store']);
 
 //Comprehensive Report
-Route::get('/comprehensive_reports/show', [ComprehensiveReportController::class, 'index']);
-Route::post('/comprehensive_reports/insert', [ComprehensiveReportController::class,  'store']);
+Route::get('/comprehensive_reports/index', [ComprehensiveReportController::class, 'index']);
+Route::post('/comprehensive_reports/store', [ComprehensiveReportController::class,  'store']);
 
 //Monthly Report
-Route::get('/monthly_details/show', [MonthlyDetailsController::class, 'index']);
-Route::post('/monthly_details/insert', [MonthlyDetailsController::class, 'store']);
+Route::get('/monthly_details/index', [MonthlyDetailsController::class, 'index']);
+Route::post('/monthly_details/store', [MonthlyDetailsController::class, 'store']);
 
 
 

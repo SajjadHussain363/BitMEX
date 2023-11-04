@@ -11,10 +11,14 @@ class MonthlyDetails extends Model
 
     protected $table = 'monthly_details';
     protected $fillable = [
-        'employee_name',
-        'employee_phone',
-        'total_tasks',
-        'done_tasks',
-        'pending_tasks',
+        'date',
+        'newUsers',
+        'deposits',
+        'dispensing',
+        'numffpeople',
+        'numapeople',
+        'orderquant',
+        'custprofitloss',
+        'runningwater'
     ];
 }

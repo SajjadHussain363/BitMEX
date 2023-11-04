@@ -27,7 +27,7 @@ class RealTimeOverViewController extends Controller
             return response()
             ->json([
                 'status' => 404,
-                'real_time_over_views' =>'No Details Found!'
+                'real_time_over_views' =>'Overview Not Found!'
             ], 404);
         }
     }
@@ -41,9 +41,15 @@ class RealTimeOverViewController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'description' => 'required',
+            'recharge' => 'required',
+            'withdraw' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'newToday' => 'required|integer',
+            'onlineUsers' => 'required|integer',
+            
         ]);
+
+        
 
         if ($validator->fails()) {
             return response()
@@ -52,20 +58,35 @@ class RealTimeOverViewController extends Controller
                 'errors' => $validator->messages()
             ], 422);
         }
+
+        
         else
         {
+        
+            $input = $request->all();
+        if ($image = $request->file('image')) {
+            $destinationPath = 'imagesRealtime/';
+            $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $postImage);
+            $input['image'] = $postImage;
+        }
+        
+        RealTimeOverView::create($input);
             
 
             $real_time_over_views = RealTimeOverView::create([
-                'title' => $request->title,
-                'description' => $request->description,
+                'recharge' => $request->recharge,
+                'withdraw' => $request->withdraw,
+                'image' => $request->image,
+                'newToday' => $request->newToday,
+                'onlineUsers' => $request->onlineUsers,
             ]);
 
             if ($real_time_over_views) {
                 return response()
                 ->json([
                     'status' => 200,
-                    'message' => 'Details Added Successfully!!'
+                    'message' => 'Overview Created Successfully!!'
                 ], 200);
             }
 
@@ -103,12 +124,7 @@ class RealTimeOverViewController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RealTimeOverView  $realTimeOverView
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy(RealTimeOverView $realTimeOverView)
     {
         //

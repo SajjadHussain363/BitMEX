@@ -15,13 +15,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $total = DB::table('products')
-        //            ->select(DB::raw('SUM(MinimumLimitAmountOne + MinimumLimitAmountOne + MinimumLimitAmountOne
-        //            + MinimumLimitAmountOne) as TotalLimitAmount'))
-        //            ->first()
-        //            ->TotalLimitAmount;
-
-        // return response()->json(['TotalLimitAmount' => $total]);
         
         $products = Product::all(); 
         if ($products->count() > 0) {
@@ -56,9 +49,9 @@ class ProductController extends Controller
             'ProductCode' => 'required|string|unique:products',
             'HomePageRecommendation' => 'required|boolean',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'MinimumRiskControlFluctuation' => 'required|decimal:2',
-            'MaximumRiskControlFluctuation' => 'required|decimal:2',
-            'RandomFluctuationRange' => 'required|decimal:2',
+            'MinimumRiskControlFluctuation' => 'required',
+            'MaximumRiskControlFluctuation' => 'required',
+            'RandomFluctuationRange' => 'required',
             'TimePlayIntervalOne' => 'required|digits:5',
             'TimePlayIntervalTwo' => 'required|digits:5',
             'TimePlayIntervalThree' => 'required|digits:5',
@@ -67,15 +60,14 @@ class ProductController extends Controller
             'MinimumLimitAmountTwo' => 'required|digits:5',
             'MinimumLimitAmountThree' => 'required|digits:5',
             'MinimumLimitAmountFour' => 'required|digits:5',
-            'TotalLimitAmount' => '',
-            'ProfitAndLossRatioOne' => 'required|decimal:2',
-            'ProfitAndLossRatioTwo' => 'required|decimal:2',
-            'ProfitAndLossRatioThree' => 'required|decimal:2',
-            'ProfitAndLossRatioFour' => 'required|decimal:2',
-            'LossRatioOne' => 'required|decimal:2',
-            'LossRatioTwo' => 'required|decimal:2',
-            'LossRatioThree' => 'required|decimal:2',
-            'LossRatioFour' => 'required|decimal:2',
+            'ProfitAndLossRatioOne' => 'required',
+            'ProfitAndLossRatioTwo' => 'required',
+            'ProfitAndLossRatioThree' => 'required',
+            'ProfitAndLossRatioFour' => 'required',
+            'LossRatioOne' => 'required',
+            'LossRatioTwo' => 'required',
+            'LossRatioThree' => 'required',
+            'LossRatioFour' => 'required',
             'MarketOpeningTimeMonday' => 'string',
             'MarketOpeningTimeTuesday' => 'string',
             'MarketOpeningTimeWednesday' => 'string',
@@ -94,13 +86,8 @@ class ProductController extends Controller
         }
         else
         {
-            // $total = $request->input('MinimumLimitAmountOne') + $request
-            // ->input('MinimumLimitAmountTwo') + $request
-            // ->input('MinimumLimitAmountThree') + $request
-            // ->input('MinimumLimitAmountFour');
 
             $input = $request->all();
-  
             if ($image = $request->file('image')) {
                 $destinationPath = 'products/';
                 $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -109,12 +96,6 @@ class ProductController extends Controller
             }
       
             Product::create($input);
-
-
-            $total = $request->input('MinimumLimitAmountOne') + 
-            $request->input('MinimumLimitAmountTwo') + 
-            $request->input('MinimumLimitAmountThree') +
-            $request->input('MinimumLimitAmountFour');
 
             
             $products = Product::create([
@@ -133,7 +114,6 @@ class ProductController extends Controller
                 'MinimumLimitAmountTwo' => $request->MinimumLimitAmountTwo,
                 'MinimumLimitAmountThree' => $request->MinimumLimitAmountThree,
                 'MinimumLimitAmountFour' => $request->MinimumLimitAmountFour,
-                'TotalLimitAmount' => $total,
                 'ProfitAndLossRatioOne' => $request->ProfitAndLossRatioOne,
                 'ProfitAndLossRatioTwo' => $request->ProfitAndLossRatioTwo,
                 'ProfitAndLossRatioThree' => $request->ProfitAndLossRatioThree,
@@ -158,7 +138,6 @@ class ProductController extends Controller
                     'message' => 'Product Added Successfully!!'
                 ], 200);
             }
-
             else
             {
                 return response()
