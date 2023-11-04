@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BankDetail extends Model
 {
-    protected $table = 'BankDetails';
+    protected $table = 'bankdetails';
 
     protected $fillable = [
     'Name',
