@@ -34,6 +34,8 @@ class Product extends Model
         'LossRatioTwo',
         'LossRatioThree',
         'LossRatioFour',
+        'Earnings_floating_ratio_range',
+        'Earnings_floating_under_loss',
         'MarketOpeningTimeMonday' ,
         'MarketOpeningTimeTuesday',
         'MarketOpeningTimeWednesday',

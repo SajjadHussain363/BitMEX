@@ -15,26 +15,24 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+       
         $products = Product::all(); 
+    
         if ($products->count() > 0) {
             return response()
-            ->json([
-                'status' => 200,
-                'products' => $products
-            ], 200);
-            
-        }
-        else {
+                ->json([
+                    'status' => 200,
+                    'products' => $products,
+                ], 200);
+        } else {
             return response()
-            ->json([
-                'status' => 404,
-                'products' =>'No Records Found!'
-            ], 404);
+                ->json([
+                    'status' => 404,
+                    'products' => 'No Records Found!',
+                ], 404);
         }
-
-        $products = config('constants.HomePageRecommendation');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -42,112 +40,89 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3|max:25',
             'ProductCode' => 'required|string|unique:products',
-            'HomePageRecommendation' => 'required|boolean',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'MinimumRiskControlFluctuation' => 'required',
-            'MaximumRiskControlFluctuation' => 'required',
-            'RandomFluctuationRange' => 'required',
-            'TimePlayIntervalOne' => 'required|digits:5',
-            'TimePlayIntervalTwo' => 'required|digits:5',
-            'TimePlayIntervalThree' => 'required|digits:5',
-            'TimePlayIntervalFour' => 'required|digits:5',
-            'MinimumLimitAmountOne' => 'required|digits:5',
-            'MinimumLimitAmountTwo' => 'required|digits:5',
-            'MinimumLimitAmountThree' => 'required|digits:5',
-            'MinimumLimitAmountFour' => 'required|digits:5',
-            'ProfitAndLossRatioOne' => 'required',
-            'ProfitAndLossRatioTwo' => 'required',
-            'ProfitAndLossRatioThree' => 'required',
-            'ProfitAndLossRatioFour' => 'required',
-            'LossRatioOne' => 'required',
-            'LossRatioTwo' => 'required',
-            'LossRatioThree' => 'required',
-            'LossRatioFour' => 'required',
+            'HomePageRecommendation' => 'required|in:0,1',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'HomePageRecommendation' => 'integer',
+            'MinimumRiskControlFluctuation' => 'integer',
+            'MaximumRiskControlFluctuation' => 'integer',
+            'RandomFluctuationRange' => 'integer',
+            'TimePlayIntervalOne' =>  'integer',
+            'TimePlayIntervalTwo' =>  'integer',
+            'TimePlayIntervalThree' =>  'integer',
+            'TimePlayIntervalFour' => 'integer',
+            'MinimumLimitAmountOne' => 'integer',
+            'MinimumLimitAmountTwo' =>  'integer',
+            'MinimumLimitAmountThree' => 'integer',
+            'MinimumLimitAmountFour' => 'integer',
+            'ProfitAndLossRatioOne' =>  'integer',
+            'ProfitAndLossRatioTwo' =>  'integer',
+            'ProfitAndLossRatioThree' =>  'integer',
+            'ProfitAndLossRatioFour' =>  'integer',
+            'LossRatioOne' =>  'integer',
+            'LossRatioTwo' =>  'integer',
+            'LossRatioThree' => 'integer',
+            'LossRatioFour' => 'integer',
+            'Earnings_floating_ratio_range' =>  'integer',
+            'Earnings_floating_under_loss' => 'integer',
             'MarketOpeningTimeMonday' => 'string',
-            'MarketOpeningTimeTuesday' => 'string',
-            'MarketOpeningTimeWednesday' => 'string',
-            'MarketOpeningTimeThursday' => 'string',
-            'MarketOpeningTimeFriday' => 'string',
+            'MarketOpeningTimeTuesday' =>  'string',
+            'MarketOpeningTimeWednesday' =>  'string',
+            'MarketOpeningTimeThursday' =>  'string',
+            'MarketOpeningTimeFriday' =>  'string',
             'MarketOpeningTimeSaturday' => 'string',
             'MarketOpeningTimeSunday' => 'string',
         ]);
 
         if ($validator->fails()) {
-            return response()
-            ->json([
-                'status' => 422, 
-                'errors' => $validator->messages()
-            ], 422);
+            return response()->json(['errors' => $validator->messages()], 422);
         }
-        else
-        {
 
-            $input = $request->all();
-            if ($image = $request->file('image')) {
-                $destinationPath = 'products/';
-                $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $postImage);
-                $input['image'] = "$postImage";
-            }
-      
-            Product::create($input);
+        $path = '';
 
-            
-            $products = Product::create([
-                'name' => $request->name,
-                'ProductCode' => $request->ProductCode,
-                'image' => $request->image,
-                'HomePageRecommendation' => $request->HomePageRecommendation,
-                'MinimumRiskControlFluctuation' => $request->MinimumRiskControlFluctuation,
-                'MaximumRiskControlFluctuation' => $request->MaximumRiskControlFluctuation,
-                'RandomFluctuationRange' => $request->RandomFluctuationRange,
-                'TimePlayIntervalOne' => $request->TimePlayIntervalOne,
-                'TimePlayIntervalTwo' => $request->TimePlayIntervalTwo,
-                'TimePlayIntervalThree' => $request->TimePlayIntervalThree,
-                'TimePlayIntervalFour' => $request->TimePlayIntervalFour,
-                'MinimumLimitAmountOne' => $request->MinimumLimitAmountOne,
-                'MinimumLimitAmountTwo' => $request->MinimumLimitAmountTwo,
-                'MinimumLimitAmountThree' => $request->MinimumLimitAmountThree,
-                'MinimumLimitAmountFour' => $request->MinimumLimitAmountFour,
-                'ProfitAndLossRatioOne' => $request->ProfitAndLossRatioOne,
-                'ProfitAndLossRatioTwo' => $request->ProfitAndLossRatioTwo,
-                'ProfitAndLossRatioThree' => $request->ProfitAndLossRatioThree,
-                'ProfitAndLossRatioFour' => $request->ProfitAndLossRatioFour,
-                'LossRatioOne' => $request->LossRatioOne,
-                'LossRatioTwo' => $request->LossRatioTwo,
-                'LossRatioThree' => $request->LossRatioThree,
-                'LossRatioFour' => $request->LossRatioFour,
-                'MarketOpeningTimeMonday' => $request->MarketOpeningTimeMonday,
-                'MarketOpeningTimeTuesday' => $request->MarketOpeningTimeTuesday,
-                'MarketOpeningTimeWednesday' => $request->MarketOpeningTimeWednesday,
-                'MarketOpeningTimeThursday' => $request->MarketOpeningTimeThursday,
-                'MarketOpeningTimeFriday' => $request->MarketOpeningTimeFriday,
-                'MarketOpeningTimeSaturday' => $request->MarketOpeningTimeSaturday,
-                'MarketOpeningTimeSunday' => $request->MarketOpeningTimeSunday,
-            ]);
-
-            if ($products) {
-                return response()
-                ->json([
-                    'status' => 200,
-                    'message' => 'Product Added Successfully!!'
-                ], 200);
-            }
-            else
-            {
-                return response()
-                ->json([
-                    'status' => 500,
-                    'message' => 'Something Went Wrong.'
-                ], 500);
-            }
+        if ($image = $request->file('image')) {
+            $path = $this->uploadImage($image);
         }
+
+       $data = $request->only([
+            'name', 'ProductCode', 'HomePageRecommendation',
+            'MinimumRiskControlFluctuation', 'MaximumRiskControlFluctuation', 'RandomFluctuationRange',
+            'TimePlayIntervalOne', 'TimePlayIntervalTwo', 'TimePlayIntervalThree', 'TimePlayIntervalFour',
+            'MinimumLimitAmountOne', 'MinimumLimitAmountTwo', 'MinimumLimitAmountThree', 'MinimumLimitAmountFour',
+            'ProfitAndLossRatioOne', 'ProfitAndLossRatioTwo', 'ProfitAndLossRatioThree', 'ProfitAndLossRatioFour',
+            'LossRatioOne', 'LossRatioTwo', 'LossRatioThree', 'LossRatioFour',
+            'Earnings_floating_ratio_range', 'Earnings_floating_under_loss',
+            'MarketOpeningTimeMonday', 'MarketOpeningTimeTuesday', 'MarketOpeningTimeWednesday',
+            'MarketOpeningTimeThursday', 'MarketOpeningTimeFriday', 'MarketOpeningTimeSaturday', 'MarketOpeningTimeSunday'
+        ]);
+
+
+        $data['image'] = $path;
+
+        $product = Product::create($data);
+
+        if ($product) {
+            return response()->json(['message' => 'Product Added Successfully!!'], 200);
+        }
+
+        return response()->json(['message' => 'Something Went Wrong.'], 500);
     }
+
+   private function uploadImage($image)
+  {
+    $destinationPath = 'public/products/'; // Adjust the destination folder as needed
+    $postImage = date('YmdHis') . '.' . $image->getClientOriginalExtension();
+    $image->move($destinationPath, $postImage);
+
+    return $destinationPath . $postImage;
+  }
+
 
     /**
      * Display the specified resource.
