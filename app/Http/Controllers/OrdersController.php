@@ -43,7 +43,6 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'orderNum' => 'required|integer',
             'MemberId' => 'required|integer|unique:orders',
             'username' => 'required|string',
             'productInfo' => 'required|string',
@@ -70,7 +69,6 @@ class OrdersController extends Controller
         {
 
             $orders = Orders::create([
-                'orderNum' => $request->orderNum,
                 'MemberId' => $request->MemberId,
                 'username' => $request->username,
                 'productInfo' => $request->productInfo,

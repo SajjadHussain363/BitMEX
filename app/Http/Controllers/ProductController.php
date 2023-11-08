@@ -29,7 +29,7 @@ class ProductController extends Controller
             return response()
             ->json([
                 'status' => 404,
-                'products' =>'No Records Found!'
+                'products' =>'No Product Found!'
             ], 404);
         }
 
@@ -68,6 +68,8 @@ class ProductController extends Controller
             'LossRatioTwo' => 'required',
             'LossRatioThree' => 'required',
             'LossRatioFour' => 'required',
+            'ratioRange' => 'required|digits:3',
+            'ratioRangeUnderLoss' => 'required|digits:3',
             'MarketOpeningTimeMonday' => 'string',
             'MarketOpeningTimeTuesday' => 'string',
             'MarketOpeningTimeWednesday' => 'string',
@@ -75,6 +77,7 @@ class ProductController extends Controller
             'MarketOpeningTimeFriday' => 'string',
             'MarketOpeningTimeSaturday' => 'string',
             'MarketOpeningTimeSunday' => 'string',
+            'productNotes'=> '',
         ]);
 
         if ($validator->fails()) {
@@ -122,6 +125,8 @@ class ProductController extends Controller
                 'LossRatioTwo' => $request->LossRatioTwo,
                 'LossRatioThree' => $request->LossRatioThree,
                 'LossRatioFour' => $request->LossRatioFour,
+                'ratioRange' => $request->ratioRange,
+                'ratioRangeUnderLoss' => $request->ratioRangeUnderLoss,
                 'MarketOpeningTimeMonday' => $request->MarketOpeningTimeMonday,
                 'MarketOpeningTimeTuesday' => $request->MarketOpeningTimeTuesday,
                 'MarketOpeningTimeWednesday' => $request->MarketOpeningTimeWednesday,
@@ -129,6 +134,7 @@ class ProductController extends Controller
                 'MarketOpeningTimeFriday' => $request->MarketOpeningTimeFriday,
                 'MarketOpeningTimeSaturday' => $request->MarketOpeningTimeSaturday,
                 'MarketOpeningTimeSunday' => $request->MarketOpeningTimeSunday,
+                'productNotes' => $request->productNotes,
             ]);
 
             if ($products) {

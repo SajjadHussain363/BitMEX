@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\ComprehensiveReportController;
+use App\Http\Controllers\IncreaseDecreaseBalanceController;
 use App\Http\Controllers\MonthlyDetailsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RealTimeOverViewController;
+use App\Http\Controllers\RechargeRecordController;
+use App\Http\Controllers\WithdrawalDetailsController;
+use App\Http\Controllers\WithdrawalRecordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankDetailController;
@@ -50,6 +54,24 @@ Route::post('curreny-set-store', [CurrencyDataController::class, 'Store']);
 
 
 // show admin statisics 
+
+//Withdrawal Record Check Details
+Route::post('/withdrawalDetails/store', [WithdrawalDetailsController::class, 'store']);
+Route::get('/withdrawalDetails/{store}', [WithdrawalDetailsController::class, 'show']);
+
+//Withdrawal Record
+Route::get('/withdrawal/index', [WithdrawalRecordController::class,  'index']);
+Route::post('/withdrawal/store', [WithdrawalRecordController::class, 'store']);
+Route::get('/withdrawal/{store}', [WithdrawalRecordController::class, 'show']);
+
+//Increase Decrease Balance
+Route::get('/increaseDecreaseBalance/index', [IncreaseDecreaseBalanceController::class,  'index']);
+Route::post('/increaseDecreaseBalance/store', [IncreaseDecreaseBalanceController::class, 'store']);
+
+//Recharge Record
+Route::get('/recharge/index', [RechargeRecordController::class,  'index']);
+Route::post('/recharge/store', [RechargeRecordController::class, 'store']);
+Route::get('/recharge/{store}', [RechargeRecordController::class, 'show']);
 
 //Orders
 Route::get('/orders/index', [OrdersController::class,  'index']);

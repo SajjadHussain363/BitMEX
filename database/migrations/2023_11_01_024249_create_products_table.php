@@ -38,6 +38,8 @@ return new class extends Migration
             $table->integer('LossRatioTwo');
             $table->integer('LossRatioThree');
             $table->integer('LossRatioFour');
+            $table->integer('ratioRange');
+            $table->integer('ratioRangeUnderLoss');
             $table->string('MarketOpeningTimeMonday')->nullable();
             $table->string('MarketOpeningTimeTuesday')->nullable();
             $table->string('MarketOpeningTimeWednesday')->nullable();
@@ -45,6 +47,7 @@ return new class extends Migration
             $table->string('MarketOpeningTimeFriday')->nullable();
             $table->string('MarketOpeningTimeSaturday')->nullable();
             $table->string('MarketOpeningTimeSunday')->nullable();
+            $table->longText('productNotes')->nullable();
             $table->timestamps();
         });
     }
