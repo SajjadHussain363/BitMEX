@@ -13,24 +13,24 @@ class RealTimeOverViewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
-        $real_time_over_views = RealTimeOverView::all(); 
-        if ($real_time_over_views->count() > 0) {
-            return response()
-            ->json([
+        $real_time_over_view = RealTimeOverView::first();
+    
+        if ($real_time_over_view) {
+            return response()->json([
                 'status' => 200,
-                'real_time_over_views' => $real_time_over_views
+                'real_time_over_view' => $real_time_over_view,
             ], 200);
-        }
-        else {
-            return response()
-            ->json([
+        } else {
+            return response()->json([
                 'status' => 404,
-                'real_time_over_views' =>'Overview Not Found!'
+                'message' => 'Overview Not Found!',
             ], 404);
         }
     }
+    
+
 
     /**
      * Store a newly created resource in storage.
@@ -41,65 +41,48 @@ class RealTimeOverViewController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'recharge' => 'required',
-            'withdraw' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'recharge' => 'required|integer',
+            'withdraw' => 'required|integer',
             'newToday' => 'required|integer',
             'onlineUsers' => 'required|integer',
-            
         ]);
-
-        
-
+    
         if ($validator->fails()) {
-            return response()
-            ->json([
+            return response()->json([
                 'status' => 422, 
                 'errors' => $validator->messages()
             ], 422);
-        }
-
-        
-        else
-        {
-        
+        } else {
             $input = $request->all();
-        if ($image = $request->file('image')) {
-            $destinationPath = 'imagesRealtime/';
-            $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $postImage);
-            $input['image'] = $postImage;
-        }
-        
-        RealTimeOverView::create($input);
             
-
-            $real_time_over_views = RealTimeOverView::create([
-                'recharge' => $request->recharge,
-                'withdraw' => $request->withdraw,
-                'image' => $request->image,
-                'newToday' => $request->newToday,
-                'onlineUsers' => $request->onlineUsers,
-            ]);
-
-            if ($real_time_over_views) {
-                return response()
-                ->json([
+         
+            $existingRecord = RealTimeOverView::where([
+                'recharge' => $input['recharge'],
+                'withdraw' => $input['withdraw'],
+                'newToday' => $input['newToday'],
+                'onlineUsers' => $input['onlineUsers'],
+            ])->first();
+    
+            if ($existingRecord) {
+         
+                $existingRecord->update($input);
+    
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Overview Updated Successfully!!'
+                ], 200);
+            } else {
+         
+                RealTimeOverView::create($input);
+    
+                return response()->json([
                     'status' => 200,
                     'message' => 'Overview Created Successfully!!'
                 ], 200);
             }
-
-            else
-            {
-                return response()
-                ->json([
-                    'status' => 500,
-                    'message' => 'Something Went Wrong.'
-                ], 500);
-            }
         }
     }
+
 
     /**
      * Display the specified resource.
