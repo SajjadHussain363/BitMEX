@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Orders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Validator;
 
@@ -109,9 +110,22 @@ class OrdersController extends Controller
      * @param  \App\Models\Orders  $orders
      * @return \Illuminate\Http\Response
      */
-    public function show(Orders $orders)
+    public function show($orders)
     {
-        return response()->json($orders);
+        $order = DB::table('orders')
+        ->select('orders.id', 'orders.MemberId', 'orders.username', 'orders.ordertime',
+        'orders.productInfo', 'orders.state', 'orders.direction',
+        'orders.timePoints', 'orders.positionOpenPoint', 'orders.closingPoint',
+        'orders.commissionBalance', 'orders.invalidOrderBalance', 'orders.effectiveOrderBalance',
+        'orders.actualProfitAndLoss','orders.balanceAfterPurchase','orders.singleControlOperation',)
+        ->where('orders.id', $orders)
+        ->get();
+
+        if ($order->isEmpty()) {
+            return response()->json(['message' => 'No Orders found']);
+        } else {
+            return response()->json($order);
+        }
     }
 
     /**
