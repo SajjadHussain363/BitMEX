@@ -15,15 +15,16 @@ class CreateCurrencyDataTable extends Migration
     {
         Schema::create('currency_data', function (Blueprint $table) {
             $table->id();
+            $table->string('currency')->nullable(); // Set as nullable
+            $table->decimal('profit_and_loss', 10, 2)->nullable(); // Set as nullable
+            $table->dateTime('date_time')->nullable(); // Set as nullable
+            $table->decimal('buy_price', 10, 2)->nullable(); // Set as nullable
+            $table->decimal('sell_price', 10, 2)->nullable(); // Set as nullable
+            $table->integer('duration')->nullable(); // Set as nullable
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('currency_data');
