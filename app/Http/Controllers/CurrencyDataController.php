@@ -2,65 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\CurrencyData;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
-
-
-class CurrencyDataController  extends Controller
+class CurrencyDataController extends Controller
 {
-   
-
-    public function show($id)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-     
-        //  $currencyData = CurrencyData::find($id);
-        
-        $currencyData = CurrencyData::get();
-    
-         if (!$currencyData) {
-             return response()->json(['error' => 'Currency data not found'], 404);
-         }
-    
-         return response()->json([
-             'message' => 'Currency data retrieved successfully',
-             'data' => $currencyData,
-         ]);
-     
+        //
     }
 
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-       
-        $validator = Validator::make($request->all(), [
-            'currency' => 'required',
-            'profit_and_loss' => 'required|numeric',
-            'date_time' => 'required|date',
-            'buy_price' => 'required|numeric',
-            'sell_price' => 'required|numeric',
-            'duration' => 'required|integer',
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
-        }
-    
-        $data = $request->all();
-        $currencyData = CurrencyData::create($data);
-    
-        
-        if ($currencyData) {
-            return response()->json(['message' => 'Currency data created', 'id' => $currencyData->id], 201);
-        } else {
-            return response()->json(['message' => 'Failed to create curreny deta'], 500);
-            
-        }
-        
-        
+        //
     }
 
-   
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\CurrencyData  $currencyData
+     * @return \Illuminate\Http\Response
+     */
+    public function show(CurrencyData $currencyData)
+    {
+        //
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\CurrencyData  $currencyData
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, CurrencyData $currencyData)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\CurrencyData  $currencyData
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(CurrencyData $currencyData)
+    {
+        //
+    }
 }
