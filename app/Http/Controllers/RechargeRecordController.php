@@ -16,7 +16,7 @@ class RechargeRecordController extends Controller
      */
     public function index()
     {
-        $recharge_records = config('constants.paymentMethod', 'constants.state');
+        
         $recharge_records = RechargeRecord::all(); 
         if ($recharge_records->count() > 0) {
             return response()
@@ -47,8 +47,8 @@ class RechargeRecordController extends Controller
 
             'rechargeAmount' => 'required|integer',
             'giftAmount' => 'required|string',
-            'paymentMethod' => 'required|string',
-            'state' => 'required|string',
+            'paymentMethod' => 'required|string|in:Bank Transfer,Card Payment,PIX,Cash On Delivery',
+            'state' => 'required|string|in:complete,pending',
             'reasonRejection' => 'required|string',
             
         ]);
@@ -89,8 +89,8 @@ class RechargeRecordController extends Controller
     }
 
 
-    public function show($orderNum)
-    {
+   public function show($orderNum)
+  {
         $order = DB::table('recharge_records')
         ->join('orders', 'recharge_records.id', "=" ,'orders.id')
         ->select('orders.id', 'orders.MemberId', 'orders.username', 'recharge_records.rechargeAmount',
