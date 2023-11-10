@@ -17,7 +17,7 @@ class WithdrawalRecordController extends Controller
      */
     public function index()
     {
-        $withdrawal_records = config('constants.processingProgress');
+        
         $withdrawal_records = WithdrawalRecord::all(); 
         if ($withdrawal_records->count() > 0) {
             return response()
@@ -46,13 +46,13 @@ class WithdrawalRecordController extends Controller
     {
         $validator = Validator::make($request->all(), [
 
-            'serialNum' => 'required|integer|unique:withdrawal_records',
+            'serialNum' => 'required|integer',
             'withdrawalAmount' => 'required|integer',
             'handlingFee' => 'required|integer',
             'actualArrival' => 'required|integer',
-            'bankDeposit' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'bankDeposit' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'denialReason' => 'required|string',
-            'processingProgress' => 'required|string',
+            'processingProgress' => 'required|string|in:completed,rejected,processing',
             
         ]);
 
@@ -65,20 +65,23 @@ class WithdrawalRecordController extends Controller
         }
         else
         {
-            $withdrawal_records = $request->all();
+        
             if ($image = $request->file('bankDeposit')) {
-                $destinationPath = 'BankDeposit/';
+                $destinationPath = public_path('BankDeposit/');
                 $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
                 $image->move($destinationPath, $postImage);
-                $withdrawal_records['bankDeposit'] = $postImage;
+                $path = 'BankDeposit/' . $postImage;
+
+                
             }
+            
             
             $withdrawal_records = WithdrawalRecord::create([
                 'serialNum' => $request->serialNum,
                 'withdrawalAmount' => $request->withdrawalAmount,
                 'handlingFee' => $request->handlingFee,
                 'actualArrival' => $request->actualArrival,
-                'bankDeposit' => $postImage,
+                'bankDeposit' => $path,
                 'denialReason' => $request->denialReason,
                 'processingProgress' => $request->processingProgress,
             ]);
