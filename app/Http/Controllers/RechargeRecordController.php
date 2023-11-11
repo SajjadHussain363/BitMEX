@@ -16,23 +16,20 @@ class RechargeRecordController extends Controller
      */
     public function index()
     {
-        $recharge_records = config('constants.paymentMethod', 'constants.state');
-        $recharge_records = RechargeRecord::all(); 
-        if ($recharge_records->count() > 0) {
-            return response()
-            ->json([
-                'status' => 200,
-                'recharge_records' => $recharge_records
-            ], 200);
-            
+        $order = config('constants.paymentMethod', 'constants.state');
+        $order = DB::table('recharge_records')
+        ->join('orders', 'recharge_records.id', "=" ,'orders.id')
+        ->select('orders.id', 'orders.MemberId', 'orders.username', 'recharge_records.rechargeAmount',
+        'recharge_records.giftAmount', 'recharge_records.paymentMethod', 
+        'recharge_records.state', 'recharge_records.reasonRejection',  'recharge_records.reasonRejection')
+        ->get();
+
+        if ($order->isEmpty()) {
+            return response()->json(['message' => 'No recharge found']);
+        } else {
+            return response()->json($order);
         }
-        else {
-            return response()
-            ->json([
-                'status' => 404,
-                'recharge_records' =>'No Recharge Found!'
-            ], 404);
-        }
+        
     }
 
     /**

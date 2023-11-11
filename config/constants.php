@@ -14,12 +14,6 @@ return [
         4 => 'Cash On Delivery'
     ],
 
-    'state'=> [
-        1 => 'Incomplete',
-        2 => 'Pending Review',
-        3 => 'Completed'
-    ],
-
     'increaseDecreaseType' => [
         1 => 'Increase Balance',
         2 => 'Reduce Balance'
