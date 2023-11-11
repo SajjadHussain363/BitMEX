@@ -15,14 +15,16 @@ class CreateWithdrawalRecordsTable extends Migration
     {
         Schema::create('withdrawal_records', function (Blueprint $table) {
             $table->id();
-            $table->integer('serialNum')->unique();
+            $table->integer('serialNum');
             $table->integer('withdrawalAmount');
             $table->integer('handlingFee');
             $table->integer('actualArrival');
             $table->string('bankDeposit');
             $table->string('denialReason');
-            $table->string('processingProgress');
+            $table->enum('processingProgress', ['completed','rejected','processing']);
             $table->timestamps();
+            
+            
         });
     }
 

@@ -48,7 +48,7 @@ class ProductController extends Controller
             'name' => 'required|string|min:3|max:25',
             'ProductCode' => 'required|string|unique:products',
             'HomePageRecommendation' => 'required|in:0,1',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
             'HomePageRecommendation' => 'integer',
             'MinimumRiskControlFluctuation' => 'integer',
             'MaximumRiskControlFluctuation' => 'integer',

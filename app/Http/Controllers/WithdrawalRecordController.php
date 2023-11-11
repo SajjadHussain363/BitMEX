@@ -17,19 +17,8 @@ class WithdrawalRecordController extends Controller
      */
     public function index()
     {
-        $order = DB::table('withdrawal_records')
-        ->join('orders', 'withdrawal_records.id', "=" ,'orders.id')
-        ->select('orders.id', 'orders.MemberId', 'orders.username', 'withdrawal_records.serialNum',
-        'withdrawal_records.withdrawalAmount', 'withdrawal_records.handlingFee', 'withdrawal_records.actualArrival',
-        'withdrawal_records.bankDeposit', 'withdrawal_records.denialReason', 'orders.ordertime',
-        'withdrawal_records.processingProgress')
-        ->get();
 
-        if ($order->isEmpty()) {
-            return response()->json(['message' => 'No withdrawal found']);
-        } else {
-            return response()->json($order);
-        }
+        
     }
 
     /**
@@ -42,13 +31,13 @@ class WithdrawalRecordController extends Controller
     {
         $validator = Validator::make($request->all(), [
 
-            'serialNum' => 'required|integer|unique:withdrawal_records',
+            'serialNum' => 'required|integer',
             'withdrawalAmount' => 'required|integer',
             'handlingFee' => 'required|integer',
             'actualArrival' => 'required|integer',
-            'bankDeposit' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'bankDeposit' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'denialReason' => 'required|string',
-            'processingProgress' => 'required|string',
+            'processingProgress' => 'required|string|in:completed,rejected,processing',
             
         ]);
 
@@ -61,20 +50,23 @@ class WithdrawalRecordController extends Controller
         }
         else
         {
-            $withdrawal_records = $request->all();
+        
             if ($image = $request->file('bankDeposit')) {
-                $destinationPath = 'BankDeposit/';
+                $destinationPath = public_path('BankDeposit/');
                 $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
                 $image->move($destinationPath, $postImage);
-                $withdrawal_records['bankDeposit'] = $postImage;
+                $path = 'BankDeposit/' . $postImage;
+
+                
             }
+            
             
             $withdrawal_records = WithdrawalRecord::create([
                 'serialNum' => $request->serialNum,
                 'withdrawalAmount' => $request->withdrawalAmount,
                 'handlingFee' => $request->handlingFee,
                 'actualArrival' => $request->actualArrival,
-                'bankDeposit' => $postImage,
+                'bankDeposit' => $path,
                 'denialReason' => $request->denialReason,
                 'processingProgress' => $request->processingProgress,
             ]);

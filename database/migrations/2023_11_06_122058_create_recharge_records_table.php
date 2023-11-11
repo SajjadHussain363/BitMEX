@@ -17,9 +17,9 @@ class CreateRechargeRecordsTable extends Migration
             $table->id();
             $table->integer('rechargeAmount');
             $table->integer('giftAmount');
-            $table->string('paymentMethod');
+            $table->enum('paymentMethod', ['Bank Transfer','Card Payment','PIX','Cash On Delivery']);
             $table->timestamp('submissionTime')->useCurrent();
-            $table->string('state');
+            $table->enum('state', ['complete', 'pending'])->default('pending');
             $table->string('reasonRejection');
             $table->timestamps();
         });
