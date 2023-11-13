@@ -16,7 +16,6 @@ class RechargeRecordController extends Controller
      */
     public function index()
     {
-        $order = config('constants.paymentMethod', 'constants.state');
         $order = DB::table('recharge_records')
         ->join('orders', 'recharge_records.id', "=" ,'orders.id')
         ->select('orders.id', 'orders.MemberId', 'orders.username', 'recharge_records.rechargeAmount',
@@ -25,12 +24,22 @@ class RechargeRecordController extends Controller
         ->get();
 
         if ($order->isEmpty()) {
-            return response()->json(['message' => 'No recharge found']);
+             return response()
+            ->json([
+                'status' => 404,
+                'recharge_records' =>'No Recharge Found!'
+            ], 404);
         } else {
-            return response()->json($order);
+             return response()
+            ->json([
+                'status' => 200,
+                'recharge_records' =>$order
+            ], 200);
+            
         }
         
     }
+
 
     /**
      * Store a newly created resource in storage.

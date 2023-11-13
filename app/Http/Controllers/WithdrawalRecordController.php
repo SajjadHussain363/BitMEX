@@ -17,7 +17,8 @@ class WithdrawalRecordController extends Controller
      */
     public function index()
     {
-        $order = DB::table('withdrawal_records')
+        
+          $order = DB::table('withdrawal_records')
         ->join('orders', 'withdrawal_records.id', "=" ,'orders.id')
         ->select('orders.id', 'orders.MemberId', 'orders.username', 'withdrawal_records.serialNum',
         'withdrawal_records.withdrawalAmount', 'withdrawal_records.handlingFee', 'withdrawal_records.actualArrival',
@@ -26,10 +27,23 @@ class WithdrawalRecordController extends Controller
         ->get();
 
         if ($order->isEmpty()) {
-            return response()->json(['message' => 'No withdrawal found']);
+            
+             return response()
+            ->json([
+                'status' => 404,
+                'withdrawal_records' =>'No Withdrawal Found!'
+            ], 404);
+            
         } else {
-            return response()->json($order);
+                return response()
+            ->json([
+                'status' => 200,
+                'withdrawal_records' => $order
+            ], 200);
+                
+            
         }
+        
     }
 
     /**
