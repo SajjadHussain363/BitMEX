@@ -16,7 +16,6 @@ class RechargeRecordController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         $order = config('constants.paymentMethod', 'constants.state');
         $order = DB::table('recharge_records')
         ->join('orders', 'recharge_records.id', "=" ,'orders.id')
@@ -29,24 +28,6 @@ class RechargeRecordController extends Controller
             return response()->json(['message' => 'No recharge found']);
         } else {
             return response()->json($order);
-=======
-        
-        $recharge_records = RechargeRecord::all(); 
-        if ($recharge_records->count() > 0) {
-            return response()
-            ->json([
-                'status' => 200,
-                'recharge_records' => $recharge_records
-            ], 200);
-            
-        }
-        else {
-            return response()
-            ->json([
-                'status' => 404,
-                'recharge_records' =>'No Recharge Found!'
-            ], 404);
->>>>>>> c4ff33e7e0a9f77c2e20249fadf6ffd6c4630a8a
         }
         
     }
@@ -63,8 +44,8 @@ class RechargeRecordController extends Controller
 
             'rechargeAmount' => 'required|integer',
             'giftAmount' => 'required|string',
-            'paymentMethod' => 'required|string|in:Bank Transfer,Card Payment,PIX,Cash On Delivery',
-            'state' => 'required|string|in:complete,pending',
+            'paymentMethod' => 'required|string',
+            'state' => 'required|string',
             'reasonRejection' => 'required|string',
             
         ]);
@@ -105,8 +86,8 @@ class RechargeRecordController extends Controller
     }
 
 
-   public function show($orderNum)
-  {
+    public function show($orderNum)
+    {
         $order = DB::table('recharge_records')
         ->join('orders', 'recharge_records.id', "=" ,'orders.id')
         ->select('orders.id', 'orders.MemberId', 'orders.username', 'recharge_records.rechargeAmount',

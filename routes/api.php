@@ -30,6 +30,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Checking for
+    $api = app('Dingo\Api\Routing\Router');
+    $api->version('v1', function ($api) {
+        $api->get('/', function () {
+            return 'Api For Login';
+        });
+
+        $api->post('/signup', 'App\Http\Controllers\UserController@store');
+        $api->post('/login', 'App\Http\Controllers\Auth\AuthController@login');
+
+        $api->group(['middleware' => 'api', 'prefix' => 'auth'], function($api){
+            $api->post('/token/refresh', 'App\Http\Controllers\Auth\AuthController@refresh');
+            $api->post('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
+        });
+
+        $api->group(['middleware' => ['role:super-admin'], 'prefix' => 'admin'], 
+    function($api) {
+        $api->get('/users', 'App\Http\Controllers\Admin\AdminUserController@index');
+        $api->get('/users/{users}', 'App\Http\Controllers\Admin\AdminUserController@show');
+    });
+    });
+
 
 // set bank details
 Route::get('bank-details/{id}', [BankDetailController::class, 'show']);
