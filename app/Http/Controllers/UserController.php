@@ -29,59 +29,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $rules = [
-            'name' => [
-                'required',
-                'string',
-                'min:3',
-                'max:30'
-            ],
-            'email' => [
-                'required',
-                'email',
-                'max:255',
-                'unique:users,email'
-            ],
-            'password' => [
-                'required',                                                                     
-                'string',
-                Password::min(8)
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                
-            ]   
-            ];
-        
-           $validator =  Validator::make($request->all(), $rules);
-
-           if ($validator->fails()) {
-            return response()->json([
-                'validation errors' => $validator->errors()]);
-           }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password, 
-        ]);
-
-        try {
-            $token = auth()->login($user);
-        } catch (JWTException $e) {
-            throw $e;
-        }
-
-        return $this->respondWithToken($token); 
-    }
-
-    private function respondWithToken($token) {
-        
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-        ]);
+      
     }
 
     /**
@@ -92,16 +40,7 @@ class UserController extends Controller
      */
     public function show($user)
     {
-        $order = DB::table('users')
-        ->select('users.name', 'users.email', 'users.password')
-        ->where('users.id', $user)
-        ->get();
 
-        if ($order->isEmpty()) {
-            return response()->json(['message' => 'No Record found']);
-        } else {
-            return response()->json($order);
-        }
     }
 
     /**

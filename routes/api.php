@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\ComprehensiveReportController;
 use App\Http\Controllers\IncreaseDecreaseBalanceController;
 use App\Http\Controllers\MonthlyDetailsController;
@@ -7,6 +9,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RealTimeOverViewController;
 use App\Http\Controllers\RechargeRecordController;
+use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\WithdrawalDetailsController;
 use App\Http\Controllers\WithdrawalRecordController;
 use Illuminate\Http\Request;
@@ -29,29 +32,18 @@ use App\Http\Controllers\StatisticsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//Login & Logout
+Route::post('/login', [AuthUserController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthUserController::class, 'logout']);
+Route::middleware('auth:sanctum')->post('/refresh', [AuthUserController::class, 'refresh']);
 
-//Checking for
-    $api = app('Dingo\Api\Routing\Router');
-    $api->version('v1', function ($api) {
-        $api->get('/', function () {
-            return 'Api For Login';
-        });
+//User Profile
+Route::middleware('auth:sanctum')->get('/profile', [AuthUserController::class, 'showProfile']);
+Route::middleware('auth:sanctum')->put('/profile', [AuthUserController::class, 'updateProfile']);
 
-        $api->post('/signup', 'App\Http\Controllers\UserController@store');
-        $api->post('/login', 'App\Http\Controllers\Auth\AuthController@login');
-
-        $api->group(['middleware' => 'api', 'prefix' => 'auth'], function($api){
-            $api->post('/token/refresh', 'App\Http\Controllers\Auth\AuthController@refresh');
-            $api->post('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
-        });
-
-        $api->group(['middleware' => ['role:super-admin'], 'prefix' => 'admin'], 
-    function($api) {
-        $api->get('/users', 'App\Http\Controllers\Admin\AdminUserController@index');
-        $api->get('/users/{users}', 'App\Http\Controllers\Admin\AdminUserController@show');
-    });
-    });
-
+//User Settings
+Route::middleware('auth:sanctum')->get('/settings', [AuthUserController::class, 'showSettings']);
+Route::middleware('auth:sanctum')->put('/settings', [AuthUserController::class, 'updateSettings']);
 
 // set bank details
 Route::get('bank-details/{id}', [BankDetailController::class, 'show']);

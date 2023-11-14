@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
 // use App\Http\Requests\StoreUserProfileRequest;
@@ -52,17 +51,9 @@ class UserProfileController extends Controller
      * @param  \App\Models\UserProfile  $userProfile
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, User $userProfile)
+    public function show(UserProfile $userProfile)
     {
-        if ($request->user()->id !== $userProfile->id) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-
-        return response()->json([
-            'users' => $userProfile,
-        ]);
+        //
     }
 
     /**
