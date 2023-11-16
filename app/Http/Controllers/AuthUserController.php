@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Hash;
+
 
 class AuthUserController extends Controller
 {
@@ -15,8 +19,12 @@ class AuthUserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+         
             $user = Auth::user();
-            $token = $user->createToken('auth_token')->plainTextToken;
+            $expiration = now()->addMinutes(24 * 60); 
+            $customClaims = ['exp' => $expiration->timestamp];
+            $token = JWTAuth::claims($customClaims)->attempt($credentials);
+            
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
@@ -30,37 +38,46 @@ class AuthUserController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        try {
+            // Get the token from the request
+            $token = JWTAuth::parseToken();
 
-        return response()->json([
-            'message' => 'Logged out successfully',
-        ]);
+            // Check if the token exists
+            if (!$token->getPayload()) {
+                return response()->json(['error' => 'Token not provided'], 401);
+            }
+
+            // Invalidate the token
+            $token->invalidate();
+
+            return response()->json(['message' => 'Successfully logged out']);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Failed to logout'], 500);
+        }
     }
 
     public function showProfile(Request $request)
     {
-        if($request)
-        {
-            return response()->json([
-                'user' => $request->user(),
-            ]);
-        }
-        else
-        {
-            return response()->json([
-                'user' => 'Token has expired',
-            ]);
-        }
+       
+           return response()->json(['success'=>true,'details' => $request->user()]);
+       
     }
-
+    
+    
     public function updateProfile(Request $request)
     {
         $user = $request->user();
-        $user->update($request->all());
-
-        return response()->json([
+       
+      
+        $user->update([
+            'name' => $request->input('name'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+        
+         return response()->json([
             'message' => 'Profile updated successfully',
         ]);
+        
     }
 
     public function showSettings(Request $request)
