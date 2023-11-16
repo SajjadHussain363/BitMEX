@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\ComprehensiveReportController;
 use App\Http\Controllers\IncreaseDecreaseBalanceController;
@@ -18,6 +18,8 @@ use App\Http\Controllers\BankDetailController;
 use App\Http\Controllers\CurrencyDataController;
 use App\Http\Controllers\StatisticsController;
     
+    
+    
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,18 +34,24 @@ use App\Http\Controllers\StatisticsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
 //Login & Logout
 Route::post('/login', [AuthUserController::class, 'login']);
-Route::middleware('auth:sanctum')->post('/logout', [AuthUserController::class, 'logout']);
-Route::middleware('auth:sanctum')->post('/refresh', [AuthUserController::class, 'refresh']);
+Route::post('/logout', [AuthUserController::class, 'logout']);
+Route::post('/refresh', [AuthUserController::class, 'refresh']);
+
+// * important use*
+// middleware('jwtAuth')
+
 
 //User Profile
-Route::middleware('auth:sanctum')->get('/profile', [AuthUserController::class, 'showProfile']);
-Route::middleware('auth:sanctum')->put('/profile', [AuthUserController::class, 'updateProfile']);
+Route::middleware('jwtAuth')->get('/profile', [AuthUserController::class, 'showProfile']);
+Route::middleware('jwtAuth')->post('/profile', [AuthUserController::class, 'updateProfile']);
 
 //User Settings
-Route::middleware('auth:sanctum')->get('/settings', [AuthUserController::class, 'showSettings']);
-Route::middleware('auth:sanctum')->put('/settings', [AuthUserController::class, 'updateSettings']);
+Route::get('/settings', [AuthUserController::class, 'showSettings']);
+Route::put('/settings', [AuthUserController::class, 'updateSettings']);
 
 // set bank details
 Route::get('bank-details/{id}', [BankDetailController::class, 'show']);
